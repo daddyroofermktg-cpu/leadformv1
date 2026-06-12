@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Daddy Roofer — Toiture & Construction Montréal</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f2f5; }
+  input, select, button { font-family: inherit; border-radius: 8px; border: 1px solid #ddd; padding: 10px 12px; outline: none; }
+  input:focus, select:focus { border-color: #c0392b; }
+
+  /* ── MOBILE LAYOUT ── */
+  .page-wrap { max-width: 480px; margin: 0 auto; padding: 16px; }
+  .left-col {}
+  .right-col {}
+
+  /* ── DESKTOP LAYOUT ── */
+  @media (min-width: 860px) {
+    body { padding: 0; }
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 32px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .left-col {
+      position: sticky;
+      top: 32px;
+    }
+  }
+
+  /* ── HERO ── */
+  .dr-hero { background: #0d1b2a; border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+  .dr-hero-top { background: #fff; padding: 20px 16px 14px; display: flex; align-items: center; justify-content: center; }
+  .dr-logo-flat { width: 160px; object-fit: contain; display: block; }
+  .dr-hero-bottom { padding: 8px 12px 12px; text-align: center; }
+  .dr-hero-bottom p { color: #b0bec5; font-size: 10px; line-height: 1.5; }
+  .dr-hero-bottom .rbq { color: #c0392b; font-size: 10px; margin-top: 2px; }
+
+  /* ── CONTACT BAR ── */
+  .contact-bar-top { background: #c0392b; border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; align-items: center; margin-bottom: 12px; }
+  .contact-bar-top a { color: #fff; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 5px; text-decoration: none; }
+  .contact-bar-top a i { font-size: 14px; }
+
+  /* ── TRUST BAR ── */
+  .trust-bar { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .trust-item { background: #0d1b2a; border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; gap: 10px; }
+  .trust-item i { font-size: 18px; color: #c0392b; flex-shrink: 0; }
+  .trust-item span { font-size: 10px; color: #b0bec5; line-height: 1.4; display: block; }
+
+  /* mobile trust bar stays 3-column grid */
+  @media (max-width: 859px) {
+    .trust-bar { display: grid; grid-template-columns: repeat(3,1fr); }
+    .trust-item { flex-direction: column; text-align: center; padding: 8px 4px; }
+    .trust-item i { font-size: 15px; margin: 0 auto 3px; }
+    .contact-bar-top { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .contact-bar-top .cb-sep { color: rgba(255,255,255,0.4); }
+  }
+
+  /* ── TABS ── */
+  .dr-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+  .dr-tab { padding: 10px 8px; border-radius: 8px; border: 2px solid transparent; background: #fff; cursor: pointer; text-align: center; transition: all 0.15s; }
+  .dr-tab.active { border-color: #c0392b; }
+  .dr-tab i { font-size: 18px; color: #c0392b; display: block; margin-bottom: 3px; }
+  .dr-tab .tab-main { font-size: 12px; font-weight: 500; color: #1a1a1a; display: block; }
+  .dr-tab .tab-sub { font-size: 9px; color: #666; line-height: 1.4; display: block; margin-top: 2px; }
+
+  /* ── WHY US (desktop sidebar only) ── */
+  .why-us { display: none; }
+  @media (min-width: 860px) {
+    .why-us { display: block; background: #fff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 16px; }
+    .why-us h3 { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #c0392b; }
+    .why-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+    .why-item:last-child { margin-bottom: 0; }
+    .why-item i { font-size: 16px; color: #c0392b; flex-shrink: 0; margin-top: 1px; }
+    .why-item-text { font-size: 12px; color: #333; line-height: 1.5; }
+    .why-item-text small { display: block; font-size: 10px; color: #888; font-style: italic; margin-top: 1px; }
+  }
+
+  /* ── SECTIONS ── */
+  .dr-section { display: none; }
+  .dr-section.active { display: block; }
+  .dr-card { background: #fff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 20px; }
+
+  /* ── PAIN HEADLINE ── */
+  .pain-headline { background: linear-gradient(135deg, #0d1b2a, #1a2e45); border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; border-left: 4px solid #c0392b; }
+  .pain-headline h3 { color: #fff; font-size: 16px; font-weight: 500; line-height: 1.3; margin-bottom: 5px; }
+  .pain-headline p { color: #b0bec5; font-size: 11px; line-height: 1.5; }
+  .pain-headline .pain-fr { color: #c0392b; font-size: 11px; font-style: italic; margin-top: 5px; }
+
+  /* ── URGENCY ── */
+  .urgency-strip { background: #27ae60; border-radius: 8px; padding: 8px 14px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; }
+  .urgency-strip i { font-size: 14px; color: #fff; }
+  .urgency-strip span { font-size: 12px; color: #fff; font-weight: 500; text-align: center; }
+
+  /* ── WHATSAPP ── */
+  .wa-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #25D366; color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; width: 100%; margin-bottom: 12px; transition: background 0.15s; }
+  .wa-btn:hover { background: #1ebe5a; }
+  .wa-btn i { font-size: 20px; }
+  .wa-divider { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .wa-divider span { font-size: 11px; color: #888; white-space: nowrap; }
+  .wa-divider::before, .wa-divider::after { content: ''; flex: 1; height: 0.5px; background: #e0e0e0; }
+
+  /* ── FORM ── */
+  .form-heading { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 3px solid #c0392b; }
+  .form-heading h2 { font-size: 18px; font-weight: 500; color: #1a1a1a; margin-bottom: 3px; }
+  .form-heading p { font-size: 12px; color: #666; line-height: 1.4; }
+  .sep { color: #c0392b; margin: 0 3px; }
+  .req { color: #c0392b; }
+  .form-group { margin-bottom: 12px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 500; color: #1a1a1a; margin-bottom: 5px; line-height: 1.4; }
+  .form-group input, .form-group select { width: 100%; font-size: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .opt-item { border: 0.5px solid #ddd; border-radius: 8px; padding: 10px; cursor: pointer; display: flex; align-items: flex-start; gap: 8px; background: #fff; transition: border-color 0.15s, background 0.15s; }
+  .opt-item:has(input:checked) { border-color: #c0392b; background: #fff5f5; }
+  .opt-item input[type="radio"], .opt-item input[type="checkbox"] { width: auto; margin-top: 2px; flex-shrink: 0; accent-color: #c0392b; padding: 0; border: none; }
+  .opt-label { font-size: 12px; line-height: 1.4; color: #1a1a1a; }
+
+  /* ── PHOTO PROMPT ── */
+  .wa-photo-prompt { background: #f0fdf4; border: 1px solid #25D366; border-radius: 8px; padding: 12px 14px; display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .wa-photo-prompt i { font-size: 22px; color: #25D366; flex-shrink: 0; margin-top: 1px; }
+  .wa-photo-prompt-text { font-size: 12px; color: #166534; line-height: 1.5; }
+  .wa-photo-prompt-text strong { display: block; font-size: 13px; margin-bottom: 3px; }
+  .wa-photo-prompt-text a { color: #25D366; font-weight: 500; text-decoration: none; }
+
+  /* ── NEXT STEPS ── */
+  .next-steps { background: #f9f9f9; border-radius: 8px; padding: 14px; margin-bottom: 14px; border: 0.5px solid #27ae60; }
+  .next-steps-title { font-size: 12px; font-weight: 500; color: #27ae60; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .next-steps-title i { font-size: 14px; }
+  .next-step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+  .next-step:last-child { margin-bottom: 0; }
+  .step-num { background: #c0392b; color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; margin-top: 1px; }
+  .step-text { font-size: 12px; color: #1a1a1a; line-height: 1.4; }
+  .step-text small { color: #666; font-size: 10px; display: block; font-style: italic; margin-top: 1px; }
+
+  /* ── RBQ BADGE ── */
+  .rbq-badge { display: flex; align-items: center; gap: 10px; border: 0.5px solid #ddd; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; background: #f9f9f9; }
+  .rbq-badge i { font-size: 18px; color: #c0392b; }
+  .rbq-badge span { font-size: 12px; font-weight: 500; color: #1a1a1a; }
+  .rbq-num { color: #c0392b; }
+
+  /* ── SUBMIT ── */
+  .dr-submit { width: 100%; padding: 14px; background: #c0392b; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s; }
+  .dr-submit:hover { background: #a93226; }
+  .dr-submit .sep { color: rgba(255,255,255,0.55); }
+  .privacy-note { font-size: 11px; color: #888; text-align: center; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+  .error-msg { color: #c0392b; font-size: 12px; margin-top: 8px; display: none; text-align: center; }
+  .submitting { opacity: 0.7; pointer-events: none; }
+
+  /* ── FOOTER ── */
+  .footer-bar { background: #0d1b2a; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+  .footer-bar-text { font-size: 10px; color: #b0bec5; line-height: 1.5; }
+  .footer-fb { display: flex; align-items: center; gap: 6px; text-decoration: none; background: #1877F2; border-radius: 6px; padding: 6px 12px; flex-shrink: 0; border: none; }
+  .footer-fb i { font-size: 16px; color: #fff; }
+  .footer-fb span { font-size: 11px; color: #fff; font-weight: 500; }
+
+  /* ── CAREERS INFO ── */
+  .hiring-banner { background: #0d1b2a; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
+  .hiring-banner h3 { color: #fff; font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .hiring-banner p { color: #c0392b; font-size: 11px; font-style: italic; line-height: 1.4; }
+  .badge-imm { display: inline-flex; align-items: center; gap: 6px; background: #c0392b; color: #fff; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 500; margin-bottom: 14px; }
+  .badge-imm i { font-size: 14px; }
+  .info-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .info-block { background: #f9f9f9; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+  .info-block-title { font-size: 11px; font-weight: 500; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .info-block-title i { font-size: 13px; color: #c0392b; }
+  .info-list { list-style: none; }
+  .info-list li { font-size: 12px; color: #1a1a1a; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+  .info-list li i { font-size: 13px; color: #c0392b; margin-top: 1px; flex-shrink: 0; }
+  .asp-badge { border: 0.5px solid #ddd; border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .asp-badge i { font-size: 18px; color: #c0392b; }
+  .asp-badge span { font-size: 12px; font-weight: 500; color: #1a1a1a; }
+  .contact-bar { background: #0d1b2a; border-radius: 8px; padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .contact-bar a { color: #fff; font-size: 11px; display: flex; align-items: center; gap: 5px; text-decoration: none; }
+  .contact-bar a i { font-size: 13px; color: #c0392b; }
+  .divider { height: 0.5px; background: #e0e0e0; margin: 14px 0; }
+
+  /* ── SUCCESS ── */
+  .success-wrap { display: none; text-align: center; padding: 2.5rem 1rem; }
+  .success-wrap i { font-size: 52px; color: #27ae60; display: block; margin-bottom: 14px; }
+  .success-wrap h3 { font-size: 20px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; }
+  .success-wrap p { font-size: 13px; color: #666; line-height: 1.8; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ══ LEFT COLUMN ══ -->
+  <div class="left-col">
+
+    <div class="dr-hero">
+      <div class="dr-hero-top">
+        <img src="logo.png" alt="Daddy Roofer" class="dr-logo-flat" onerror="this.style.display='none'"/>
+      </div>
+      <div class="dr-hero-bottom">
+        <p>Licensed &amp; Insured &nbsp;·&nbsp; Licencié &amp; Assuré &nbsp;·&nbsp; Con Licencia y Asegurado</p>
+        <p class="rbq">Montréal et environs &nbsp;·&nbsp; RBQ: 5876-6171-01</p>
+      </div>
+    </div>
+
+    <div class="contact-bar-top">
+      <a href="tel:5144478028"><i class="ti ti-phone"></i> 514-447-8028</a>
+      <span class="cb-sep" style="display:none">|</span>
+      <a href="mailto:contact@daddyroofer.com"><i class="ti ti-mail"></i> contact@daddyroofer.com</a>
+    </div>
+
+    <div class="trust-bar">
+      <div class="trust-item"><i class="ti ti-shield-check"></i><span>Licensed &amp; Insured &nbsp;·&nbsp; Licencié &amp; Assuré &nbsp;·&nbsp; Con Licencia</span></div>
+      <div class="trust-item"><i class="ti ti-clock"></i><span>Free Estimate &nbsp;·&nbsp; Devis Gratuit &nbsp;·&nbsp; Estimado Gratis</span></div>
+      <div class="trust-item"><i class="ti ti-building"></i><span>Residential &amp; Commercial &nbsp;·&nbsp; Résidentiel &amp; Commercial</span></div>
+    </div>
+
+    <div class="dr-tabs">
+      <div class="dr-tab active" onclick="showTab('estimate')">
+        <i class="ti ti-home"></i>
+        <span class="tab-main">Get an Estimate</span>
+        <span class="tab-sub">Obtenir un Devis<br>Obtener un Estimado</span>
+      </div>
+      <div class="dr-tab" onclick="showTab('careers')">
+        <i class="ti ti-hard-hat"></i>
+        <span class="tab-main">Join Our Team</span>
+        <span class="tab-sub">Rejoindre l'Équipe<br>Únete al Equipo</span>
+      </div>
+    </div>
+
+    <!-- Desktop only: Why Us -->
+    <div class="why-us">
+      <h3>Why Daddy Roofer? &nbsp;·&nbsp; Pourquoi nous?</h3>
+      <div class="why-item"><i class="ti ti-certificate"></i><div class="why-item-text">RBQ Licensed &amp; Fully Insured<small>Licencié RBQ &amp; Pleinement Assuré &nbsp;·&nbsp; Con Licencia RBQ y Asegurado</small></div></div>
+      <div class="why-item"><i class="ti ti-home"></i><div class="why-item-text">Residential &amp; Commercial Specialists<small>Spécialistes Résidentiel &amp; Commercial &nbsp;·&nbsp; Especialistas Residencial &amp; Comercial</small></div></div>
+      <div class="why-item"><i class="ti ti-tool"></i><div class="why-item-text">TPO Membrane &amp; Roof Replacement Experts<small>Experts Membranes TPO &amp; Remplacement &nbsp;·&nbsp; Expertos en Membranas TPO</small></div></div>
+      <div class="why-item"><i class="ti ti-map-pin"></i><div class="why-item-text">Serving Montréal &amp; Surroundings<small>Nous servons Montréal et environs &nbsp;·&nbsp; Servimos Montréal y alrededores</small></div></div>
+      <div class="why-item"><i class="ti ti-brand-facebook" style="color:#1877F2"></i><div class="why-item-text"><a href="https://www.facebook.com/profile.php?id=61568958818635" target="_blank" style="color:#1877F2;text-decoration:none;font-weight:500;">Follow us on Facebook</a><small>Suivez-nous sur Facebook &nbsp;·&nbsp; Síguenos en Facebook</small></div></div>
+    </div>
+
+  </div>
+
+  <!-- ══ RIGHT COLUMN ══ -->
+  <div class="right-col">
+
+    <!-- ESTIMATE -->
+    <div id="estimate-section" class="dr-section active">
+      <div class="dr-card">
+        <div id="est-form-wrap">
+          <div class="pain-headline">
+            <h3>🏠 Time for a new roof? Get a free estimate.<br><span style="font-size:14px;color:#e0e0e0;">Temps de remplacer votre toit? Devis gratuit.</span></h3>
+            <p>Residential &amp; commercial roof replacements — licensed, insured, Montréal &amp; surroundings.</p>
+            <p class="pain-fr">Reemplazo de techos residenciales y comerciales — con licencia, asegurado, Montréal y alrededores.</p>
+          </div>
+          <div class="urgency-strip">
+            <i class="ti ti-clock"></i>
+            <span>We get back to you within 24 hours &nbsp;·&nbsp; Réponse en 24 heures &nbsp;·&nbsp; Respondemos en 24 horas</span>
+          </div>
+          <a class="wa-btn" href="https://wa.me/15144478028?text=Hi%20Daddy%20Roofer%2C%20I%27d%20like%20a%20free%20estimate%20for%20a%20roof%20replacement" target="_blank">
+            <i class="ti ti-brand-whatsapp"></i>
+            Message us on WhatsApp &nbsp;·&nbsp; WhatsApp &nbsp;·&nbsp; WhatsApp
+          </a>
+          <div class="wa-divider"><span>or fill the form / ou remplir le formulaire / o llenar el formulario</span></div>
+          <div class="form-heading">
+            <h2>Request a Free Estimate</h2>
+            <p>Demander un Devis Gratuit <span class="sep">|</span> Solicitar un Presupuesto Gratis</p>
+          </div>
+          <form id="estimate-form" action="https://formspree.io/f/mqeoybay" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full Name<span class="req">*</span> / Nom Complet / Nombre Completo</label>
+                <input type="text" name="Full Name" placeholder="John Smith / Jean Dupont / Juan García" required/>
+              </div>
+              <div class="form-group">
+                <label>Property Address<span class="req">*</span> / Adresse / Dirección</label>
+                <input type="text" name="Address" placeholder="123 Rue Main, Montréal" required/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email<span class="req">*</span> / Adresse Email / Correo</label>
+                <input type="email" name="Email" placeholder="email@example.com" required/>
+              </div>
+              <div class="form-group">
+                <label>Phone<span class="req">*</span> / Téléphone / Teléfono</label>
+                <input type="tel" name="Phone" placeholder="(514) 000-0000" required/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Property Type<span class="req">*</span> / Type / Tipo</label>
+                <select name="Property Type" required>
+                  <option value="">Select / Sélectionner / Seleccionar</option>
+                  <option>Residential / Résidentiel / Residencial</option>
+                  <option>Commercial / Commercial / Comercial</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Roof Type / Type de toit / Tipo de techo</label>
+                <select name="Roof Type">
+                  <option value="">Select / Sélectionner / Seleccionar</option>
+                  <option>Flat / Plat / Plano</option>
+                  <option>Sloped / En pente / Inclinado</option>
+                  <option>Not sure / Pas sûr / No sé</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Reason for replacement<span class="req">*</span> / Raison du remplacement / Motivo del reemplazo</label>
+              <div class="opt-grid">
+                <label class="opt-item"><input type="checkbox" name="Reason" value="Aging roof"/><span class="opt-label">🕐 Aging roof / Vieillissement / Vejez</span></label>
+                <label class="opt-item"><input type="checkbox" name="Reason" value="Persistent leak"/><span class="opt-label">🌧 Persistent leak / Fuite / Gotera</span></label>
+                <label class="opt-item"><input type="checkbox" name="Reason" value="Storm damage"/><span class="opt-label">⚡ Storm damage / Tempête / Tormenta</span></label>
+                <label class="opt-item"><input type="checkbox" name="Reason" value="TPO / Membrane"/><span class="opt-label">🏗 TPO / Membrane replacement</span></label>
+                <label class="opt-item"><input type="checkbox" name="Reason" value="Renovation"/><span class="opt-label">🔨 Renovation / Rénovation</span></label>
+                <label class="opt-item"><input type="checkbox" name="Reason" value="Other"/><span class="opt-label">❓ Other / Autre / Otro</span></label>
+              </div>
+            </div>
+            <div class="wa-photo-prompt">
+              <i class="ti ti-brand-whatsapp"></i>
+              <div class="wa-photo-prompt-text">
+                <strong>📷 Have photos of your roof? / Vous avez des photos? / ¿Tienes fotos?</strong>
+                Send them via WhatsApp to <a href="https://wa.me/15144478028" target="_blank">514-447-8028</a> — helps us prepare your estimate faster.<br>
+                <span style="font-style:italic;">Envoyez-les via WhatsApp · Envíalas por WhatsApp</span>
+              </div>
+            </div>
+            <div class="next-steps">
+              <div class="next-steps-title"><i class="ti ti-info-circle"></i> What happens after you submit? / Ce qui se passe? / ¿Qué pasa después?</div>
+              <div class="next-step"><div class="step-num">1</div><div class="step-text">We get back to you within 24 hours<small>Nous vous contactons dans les 24 heures &nbsp;·&nbsp; Le contactamos en 24 horas</small></div></div>
+              <div class="next-step"><div class="step-num">2</div><div class="step-text">Free on-site inspection &amp; measurement<small>Inspection et mesure gratuites &nbsp;·&nbsp; Inspección y medición gratuita</small></div></div>
+              <div class="next-step"><div class="step-num">3</div><div class="step-text">Written quote — no obligation<small>Devis écrit sans engagement &nbsp;·&nbsp; Presupuesto sin compromiso</small></div></div>
+            </div>
+            <div class="rbq-badge">
+              <i class="ti ti-certificate"></i>
+              <span>Licensed &amp; Insured &nbsp;·&nbsp; Licencié &amp; Assuré &nbsp;·&nbsp; Con Licencia &nbsp;<span class="rbq-num">RBQ: 5876-6171-01</span></span>
+            </div>
+            <button type="submit" class="dr-submit" id="est-btn">
+              <i class="ti ti-send"></i>
+              Submit <span class="sep">/</span> Soumettre <span class="sep">/</span> Enviar
+            </button>
+            <p class="privacy-note"><i class="ti ti-lock" style="font-size:12px"></i> Your info is private &nbsp;·&nbsp; Données privées &nbsp;·&nbsp; Datos privados</p>
+            <p class="error-msg" id="est-error">Something went wrong. Please try again or call us at 514-447-8028.</p>
+          </form>
+        </div>
+        <div class="success-wrap" id="est-success">
+          <i class="ti ti-circle-check"></i>
+          <h3>Thank you! / Merci! / ¡Gracias!</h3>
+          <p>We'll get back to you within 24 hours.<br>Nous vous contacterons dans les 24 heures.<br>Le contactaremos en 24 horas.</p>
+          <a class="wa-btn" href="https://wa.me/15144478028?text=Hi%2C%20I%20just%20submitted%20an%20estimate%20request%20and%20want%20to%20send%20roof%20photos" target="_blank" style="max-width:380px;margin:0 auto;">
+            <i class="ti ti-brand-whatsapp"></i> Send roof photos via WhatsApp
+          </a>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <span class="footer-bar-text">Nous travaillons à Montréal et environs &nbsp;·&nbsp; Servimos Montréal y alrededores</span>
+        <a class="footer-fb" href="https://www.facebook.com/profile.php?id=61568958818635" target="_blank">
+          <i class="ti ti-brand-facebook"></i><span>Facebook</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- CAREERS -->
+    <div id="careers-section" class="dr-section">
+      <div class="dr-card">
+        <div id="car-form-wrap">
+          <div class="pain-headline">
+            <h3>💼 Looking for stable roofing work in Montréal?<br><span style="font-size:14px;color:#e0e0e0;">Vous cherchez un emploi stable en toiture?</span></h3>
+            <p>Join a growing team specializing in roof replacements — CCQ wages, full-time, immediate start.</p>
+            <p class="pain-fr">¿Buscas trabajo estable en techado? Únete — salario CCQ, tiempo completo, inicio inmediato.</p>
+          </div>
+          <div class="urgency-strip">
+            <i class="ti ti-clock"></i>
+            <span>Hiring now &nbsp;·&nbsp; Embauche immédiate &nbsp;·&nbsp; Contratación inmediata</span>
+          </div>
+          <a class="wa-btn" href="https://wa.me/15144478028?text=Hi%2C%20I%27m%20interested%20in%20working%20with%20Daddy%20Roofer" target="_blank">
+            <i class="ti ti-brand-whatsapp"></i>
+            Message us on WhatsApp &nbsp;·&nbsp; WhatsApp &nbsp;·&nbsp; WhatsApp
+          </a>
+          <div class="wa-divider"><span>or apply below / ou postuler / o aplicar abajo</span></div>
+          <div class="hiring-banner">
+            <h3>Daddy Roofer Recrute ! &nbsp;·&nbsp; ¡Está Contratando!</h3>
+            <p>Des couvreurs passionnés pour bâtir l'excellence avec nous.<br>Buscamos techadores apasionados para construir la excelencia.</p>
+          </div>
+          <div><div class="badge-imm"><i class="ti ti-clock"></i> Embauche Immédiate / Contratación Inmediata</div></div>
+          <div class="info-two-col">
+            <div class="info-block">
+              <div class="info-block-title"><i class="ti ti-users"></i> Postes / Puestos</div>
+              <ul class="info-list">
+                <li><i class="ti ti-check"></i>Apprenti 1 / Aprendiz 1</li>
+                <li><i class="ti ti-check"></i>Apprenti 2 / Aprendiz 2</li>
+                <li><i class="ti ti-check"></i>Compagnon / Compañero</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title"><i class="ti ti-building"></i> Secteur / Sector</div>
+              <ul class="info-list">
+                <li><i class="ti ti-check"></i>Commercial</li>
+                <li><i class="ti ti-check"></i>Résidentiel / Residencial</li>
+              </ul>
+            </div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-title"><i class="ti ti-gift"></i> Ce que nous offrons / Lo que ofrecemos</div>
+            <ul class="info-list">
+              <li><i class="ti ti-currency-dollar"></i>Salaire selon conventions CCQ / Salario según convenciones CCQ</li>
+              <li><i class="ti ti-clock"></i>Travail à temps plein / Trabajo de tiempo completo</li>
+              <li><i class="ti ti-map-pin"></i>Chantiers à <strong>Montréal</strong> et environs / Proyectos en <strong>Montréal</strong></li>
+              <li><i class="ti ti-trending-up"></i>Possibilités d'avancement / Oportunidades de crecimiento</li>
+              <li><i class="ti ti-rocket"></i>Entreprise en pleine croissance / Empresa en pleno crecimiento</li>
+            </ul>
+          </div>
+          <div class="asp-badge"><i class="ti ti-shield-check"></i><span>ASP Construction obligatoire / ASP Construction obligatoria</span></div>
+          <div class="divider"></div>
+          <div class="form-heading" style="border-bottom:none;padding-bottom:0;margin-bottom:14px;">
+            <h2>Apply Now</h2>
+            <p>Postuler Maintenant <span class="sep">|</span> Aplicar Ahora</p>
+          </div>
+          <form id="careers-form" action="https://formspree.io/f/xvznwerw" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full Name<span class="req">*</span> / Nom Complet / Nombre Completo</label>
+                <input type="text" name="Full Name" placeholder="John Smith / Jean Dupont / Juan García" required/>
+              </div>
+              <div class="form-group">
+                <label>Phone<span class="req">*</span> / Téléphone / Teléfono</label>
+                <input type="tel" name="Phone" placeholder="(514) 000-0000" required/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email<span class="req">*</span> / Adresse Email / Correo</label>
+              <input type="email" name="Email" placeholder="email@example.com" required/>
+            </div>
+            <div class="form-group">
+              <label>Position<span class="req">*</span> / Poste / Puesto</label>
+              <div class="opt-grid">
+                <label class="opt-item"><input type="radio" name="Position" value="Apprenti 1 / Aprendiz 1" required/><span class="opt-label">Apprenti 1 / Aprendiz 1</span></label>
+                <label class="opt-item"><input type="radio" name="Position" value="Apprenti 2 / Aprendiz 2"/><span class="opt-label">Apprenti 2 / Aprendiz 2</span></label>
+                <label class="opt-item"><input type="radio" name="Position" value="Compagnon / Compañero"/><span class="opt-label">Compagnon / Compañero</span></label>
+                <label class="opt-item"><input type="radio" name="Position" value="Other / Autre / Otro"/><span class="opt-label">Other / Autre / Otro</span></label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Experience<span class="req">*</span> / Expérience / Experiencia</label>
+                <select name="Experience" required>
+                  <option value="">Select / Sélectionner / Seleccionar</option>
+                  <option>No experience / Aucune / Sin experiencia</option>
+                  <option>1–2 years / ans / años</option>
+                  <option>3–5 years / ans / años</option>
+                  <option>5+ years / ans / años</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>ASP Construction?<span class="req">*</span></label>
+                <select name="ASP Construction" required>
+                  <option value="">Select / Sélectionner / Seleccionar</option>
+                  <option>Yes / Oui / Sí</option>
+                  <option>No / Non / No</option>
+                  <option>In progress / En cours / En proceso</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Availability / Disponibilité / Disponibilidad</label>
+              <select name="Availability">
+                <option value="">Select / Sélectionner / Seleccionar</option>
+                <option>Immediately / Immédiatement / Inmediatamente</option>
+                <option>2 weeks / 2 semaines / 2 semanas</option>
+                <option>1 month / 1 mois / 1 mes</option>
+              </select>
+            </div>
+            <div class="next-steps">
+              <div class="next-steps-title"><i class="ti ti-info-circle"></i> What happens after you apply? / Après votre candidature? / ¿Qué pasa después?</div>
+              <div class="next-step"><div class="step-num">1</div><div class="step-text">We review your application within 24h<small>Nous examinons votre candidature dans les 24h &nbsp;·&nbsp; Revisamos en 24h</small></div></div>
+              <div class="next-step"><div class="step-num">2</div><div class="step-text">Quick phone call to get acquainted<small>Appel téléphonique rapide &nbsp;·&nbsp; Llamada rápida para conocernos</small></div></div>
+              <div class="next-step"><div class="step-num">3</div><div class="step-text">Start date confirmed — welcome to the team!<small>Date de début confirmée &nbsp;·&nbsp; ¡Bienvenido al equipo!</small></div></div>
+            </div>
+            <div class="contact-bar">
+              <a href="tel:5144478028"><i class="ti ti-phone"></i> 514-447-8028</a>
+              <a href="mailto:contact@daddyroofer.com"><i class="ti ti-mail"></i> contact@daddyroofer.com</a>
+              <a href="#"><i class="ti ti-building"></i> RBQ: 5876-6171-01</a>
+            </div>
+            <button type="submit" class="dr-submit" id="car-btn">
+              <i class="ti ti-send"></i>
+              Apply Now <span class="sep">/</span> Postuler <span class="sep">/</span> Aplicar
+            </button>
+            <p class="privacy-note"><i class="ti ti-lock" style="font-size:12px"></i> Your info is private &nbsp;·&nbsp; Données privées &nbsp;·&nbsp; Datos privados</p>
+            <p class="error-msg" id="car-error">Something went wrong. Please try again or call us at 514-447-8028.</p>
+          </form>
+        </div>
+        <div class="success-wrap" id="car-success">
+          <i class="ti ti-circle-check"></i>
+          <h3>Thank you! / Merci! / ¡Gracias!</h3>
+          <p>We'll get back to you within 24 hours.<br>Nous vous contacterons dans les 24 heures.<br>Le contactaremos en 24 horas.</p>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <span class="footer-bar-text">Nous travaillons à Montréal et environs &nbsp;·&nbsp; Servimos Montréal y alrededores</span>
+        <a class="footer-fb" href="https://www.facebook.com/profile.php?id=61568958818635" target="_blank">
+          <i class="ti ti-brand-facebook"></i><span>Facebook</span>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- end right-col -->
+</div><!-- end page-wrap -->
+
+<script>
+function showTab(tab) {
+  document.querySelectorAll('.dr-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.dr-section').forEach(s => s.classList.remove('active'));
+  if (tab === 'estimate') {
+    document.querySelectorAll('.dr-tab')[0].classList.add('active');
+    document.getElementById('estimate-section').classList.add('active');
+  } else {
+    document.querySelectorAll('.dr-tab')[1].classList.add('active');
+    document.getElementById('careers-section').classList.add('active');
+  }
+}
+
+async function handleForm(e, formId, btnId, wrapId, successId, errorId, btnLabel) {
+  e.preventDefault();
+  const form = document.getElementById(formId);
+  const btn = document.getElementById(btnId);
+  const error = document.getElementById(errorId);
+  btn.classList.add('submitting');
+  btn.innerHTML = '<i class="ti ti-loader"></i> Sending...';
+  error.style.display = 'none';
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST', body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      document.getElementById(wrapId).style.display = 'none';
+      document.getElementById(successId).style.display = 'block';
+    } else { throw new Error(); }
+  } catch {
+    btn.classList.remove('submitting');
+    btn.innerHTML = btnLabel;
+    error.style.display = 'block';
+  }
+}
+
+document.getElementById('estimate-form').addEventListener('submit', e =>
+  handleForm(e,'estimate-form','est-btn','est-form-wrap','est-success','est-error',
+    '<i class="ti ti-send"></i> Submit / Soumettre / Enviar'));
+
+document.getElementById('careers-form').addEventListener('submit', e =>
+  handleForm(e,'careers-form','car-btn','car-form-wrap','car-success','car-error',
+    '<i class="ti ti-send"></i> Apply Now / Postuler / Aplicar'));
+</script>
+</body>
+</html>
